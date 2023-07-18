@@ -43,7 +43,7 @@ function EditProfile(props) {
     const updateUserProfile = async (userId, token, username, email, password) => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/users/${userId}`, {
+      const response = await fetch(`${API_URL}/api/users/${userId}`, {
           headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
