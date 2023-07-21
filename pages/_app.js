@@ -24,7 +24,7 @@ function MyApp(props) {
     
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_URL}api/users/me`, {
+      const response = await fetch(`${API_URL}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();

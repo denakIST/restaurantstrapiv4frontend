@@ -7,8 +7,8 @@ import axios from "axios";
 import AppContext from "./context";
 import { Token } from "graphql";
 
-//export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
-export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+//export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 //validate user information
 const validateUserInput = (username, email, password) => {
@@ -53,7 +53,7 @@ export const registerUser = (username, email, password) => {
   return new Promise((resolve, reject) => {
     if (validateUserInput(username,email,password)) {
       axios
-        .post(`${API_URL}api/auth/local/register`, { username, email, password })
+        .post(`${API_URL}/api/auth/local/register`, { username, email, password })
         .then((res) => {
           //set token response from Strapi for server validation
           Cookie.set("token", res.data.jwt, { expires: 365 }); //Set to persist for 365 days
@@ -93,7 +93,7 @@ export const login = (identifier, password) => {
   }
   return new Promise((resolve, reject) => {
     axios
-      .post(`${API_URL}api/auth/local/`, { identifier, password })
+      .post(`${API_URL}/api/auth/local/`, { identifier, password })
       .then((res) => {
         //set token response from Strapi for server validation
         Cookie.set("token", res.data.jwt, { expires: 365 }); //Set to persist for 365 days
