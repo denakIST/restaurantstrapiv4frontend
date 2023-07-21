@@ -46,7 +46,7 @@ function RestaurantList(props) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
-  console.log(`Query Data: ${JSON.stringify(data.restaurants.data)}`)
+  console.log(`Query Data: ${JSON.stringify(data.restaurants)}`)
 
 
   let searchQuery = data.restaurants.data.filter((res) => {

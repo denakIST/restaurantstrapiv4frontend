@@ -33,7 +33,7 @@ function Orders(props) {
     const orderHistory = async (token, userId) => {
         setLoading(true);
         try {
-            const response = await fetch(`${API_URL}/orders?user=${userId}`, {
+            const response = await fetch(`${API_URL}orders?user=${userId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

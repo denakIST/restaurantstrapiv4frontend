@@ -8,13 +8,31 @@ import AppContext from "../components/context";
 import { useContext } from "react";
 
 function Home() {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+    //const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     var { cart, user } = useContext(AppContext);
     console.log(`URL: ${API_URL}`)
     const [query, setQuery] = useState("");
-    const link = new HttpLink({ uri: `${API_URL}/graphql`})
+   
+    // Define the timeout value in milliseconds (e.g., 10 seconds)
+    const timeoutValue = 10000;
+    const link = new HttpLink({
+    uri: `${API_URL}graphql`,
+    fetchOptions: {
+      timeout: timeoutValue,
+    },
+  });
+    
     const cache = new InMemoryCache()
-    const client = new ApolloClient({ link, cache });
+    //const client = new ApolloClient({ link, cache });
+
+    const client = new ApolloClient({
+        link,
+        cache,
+        onError: (error) => {
+            console.error('Apollo Client Error:', error);
+        },
+        });
 
 /*
     const client = new ApolloClient({
