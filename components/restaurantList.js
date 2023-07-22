@@ -17,49 +17,60 @@ import {
   Col
 } from "reactstrap";
 
-function RestaurantList(props) {
-  const [restaurantID, setRestaurantID] = useState(0)
-  const { cart } = useContext(AppContext);
-  const [state, setState] = useState(cart)
 
- const GET_RESTAURANTS = gql`
-  {
-    restaurants {
-      data {
-        id
-        attributes {
-          name
-          description
-          image {
-            data {
-              attributes {
-                url
+import TextTruncate from 'react-text-truncate';
+
+
+function RestaurantList(props) {
+  const [restaurantID, setRestaurantID] = useState(0);
+  const [expandedRestaurantID, setExpandedRestaurantID] = useState(null);
+  const { cart } = useContext(AppContext);
+  const [state, setState] = useState(cart);
+
+  const GET_RESTAURANTS = gql`
+    {
+      restaurants {
+        data {
+          id
+          attributes {
+            name
+            description
+            image {
+              data {
+                attributes {
+                  url
+                }
               }
             }
           }
         }
       }
     }
-  }
-`;
-  const { loading, error, data } = useQuery(GET_RESTAURANTS)
+  `;
+
+  const { loading, error, data } = useQuery(GET_RESTAURANTS);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
-  console.log(`Query Data: ${JSON.stringify(data.restaurants)}`)
-
 
   let searchQuery = data.restaurants.data.filter((res) => {
-    return (res.attributes.name.toLowerCase().includes(props.search) ||
-      res.attributes.description.toLowerCase().includes(props.search) 
-    )
+    return (
+      res.attributes.name.toLowerCase().includes(props.search) ||
+      res.attributes.description.toLowerCase().includes(props.search)
+    );
   }) || [];
 
   let restId = searchQuery[0] ? searchQuery[0].id : null;
 
-  // definet renderer for Dishes
+  // Define renderer for Dishes
   const renderDishes = (restaurantID) => {
-    return (<Dishes restId={restaurantID}> </Dishes>)
+    return (<Dishes restId={restaurantID} />);
+  };
+
+  // Function to toggle restaurant description expansion
+  const onToggleLines = (restaurantID) => {
+    setExpandedRestaurantID((prevState) => (prevState === restaurantID ? null : restaurantID));
   };
 
   if (searchQuery.length > 0) {
@@ -69,40 +80,56 @@ function RestaurantList(props) {
           <CardImg
             top={true}
             style={{ height: 200 }}
-            src={
-              `${API_URL}` + res.attributes.image.data.attributes.url
-            }
+            src={`${API_URL}${res.attributes.image.data.attributes.url}`}
           />
           <CardBody>
-            <CardText>{res.description}</CardText>
+            {expandedRestaurantID === res.id ? (
+              <CardText>{res.attributes.description}</CardText>
+            ) : (
+              <TextTruncate
+                line={2}
+                truncateText="..."
+                text={res.attributes.description}
+                textTruncateChild={
+                  <Button
+                    color="link"
+                    size="sm"
+                    onClick={() => onToggleLines(res.id)}
+                  >
+                  Read more
+                  </Button>
+                }
+              />
+            )}
           </CardBody>
           <div className="card-footer">
-            <Button color="info" onClick={() => setRestaurantID(res.id)}>{res.attributes.name}</Button>
+            <Button
+              color="info"
+              onClick={() => setRestaurantID(res.id)}
+            >
+              {res.attributes.name}
+            </Button>
           </div>
         </Card>
       </Col>
-    ))
+    ));
 
     return (
-
-    
-
       <Container>
         {restaurantID ? (
           <Row xs='3'>
-          {renderDishes(restaurantID)}
-        </Row>
+            {renderDishes(restaurantID)}
+          </Row>
         ) : (
           <Row xs='3'>
-          {restList}
-        </Row>
-        )  
-      }  
+            {restList}
+          </Row>
+        )}
       </Container>
-
-    )
+    );
   } else {
-    return <h1> No Restaurants Found</h1>
+    return <h1> No Restaurants Found</h1>;
   }
 }
-export default RestaurantList
+
+export default RestaurantList;

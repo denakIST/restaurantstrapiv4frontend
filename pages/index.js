@@ -34,19 +34,6 @@ function Home() {
         },
         });
 
-/*
-    const client = new ApolloClient({
-        uri: `${API_URL}/graphql`,
-        cache: new InMemoryCache(),
-        defaultOptions: {
-            mutate: {
-            errorPolicy: "all",
-            },
-            query: {
-            errorPolicy: "all",
-    },
-  },
-});*/
     
    // handler for render on button click
    
