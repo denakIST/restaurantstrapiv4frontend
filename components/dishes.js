@@ -101,7 +101,7 @@ function Dishes({ restId }) {
             <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
               <CardImg
                 top={true}
-                style={{ height: 150, width: 150 }}
+                style={{ height: 150, width: 100 }}
                 src={`${res.attributes.image.data.attributes.url}`}
               />
               <CardBody
