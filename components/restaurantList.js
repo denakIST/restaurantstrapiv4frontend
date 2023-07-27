@@ -75,13 +75,12 @@ function RestaurantList(props) {
 
   if (searchQuery.length > 0) {
     const restList = searchQuery.map((res) => (
-      console.log(`picURL ${res.attributes.image.data.attributes.url}`)
       <Col xs="6" sm="4" key={res.id}>
         <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
           <CardImg
             top={true}
             style={{ height: 200 }}
-            src={`${API_URL}${res.attributes.image.data.attributes.url}`}
+            src={`${res.attributes.image.data.attributes.url}`}
           />
           <CardBody>
             {expandedRestaurantID === res.id ? (
