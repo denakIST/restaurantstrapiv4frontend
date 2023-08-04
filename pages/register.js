@@ -106,10 +106,12 @@ const Register = () => {
                             // set authed user in global context object
                             appContext.setUser(res.data.user);
                             setLoading(false);
+                            alert("Registration Successfull!")
                             console.log(`registered user: ${JSON.stringify(res.data)}`)
                           })
                           .catch((error) => {
                             console.log(`error in register: ${error}`)
+                            alert(`${error}`)
                             //setError(error.response.data);
                             setLoading(false);
                           });
