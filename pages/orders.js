@@ -39,8 +39,8 @@ function Orders(props) {
     const orderHistory = async (token, userId) => {
         setLoading(true);
         try {
-            //const response = await fetch(`${API_URL}/api/orders?user.id=${userId}`, {
-            const response = await fetch(`${API_URL}/api/orders?filters[user][id][eq]=${userId}`, {
+            const response = await fetch(`${API_URL}/api/orders?user.id=${userId}`, {
+            //const response = await fetch(`${API_URL}/api/orders?filters[user][id][eq]=${userId}`, {
             
         headers: {
               'Authorization': `Bearer ${token}`,
@@ -63,8 +63,8 @@ function Orders(props) {
     };
 
     useEffect(() => {
-    console.log(`orders ${JSON.stringify(orders.results)}`);
-  }, [orders.results]);
+    console.log(`orders ${JSON.stringify(orders)}`);
+  }, [orders]);
 
     // useEffect for fetching data only when there is a user and authToken in the appContext
     useEffect(() => {
