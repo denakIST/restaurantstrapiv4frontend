@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import AppContext from "../components/context";
@@ -26,7 +27,7 @@ import { API_URL } from "../components/auth";
 
 function EditProfile(props) {
     const appContext = useContext(AppContext);
-    //var { user, setUser, authToken, setAuthToken } = useContext(AppContext);
+    var { user, setUser, authToken, setAuthToken } = useContext(AppContext);
     const [data, setData] = useState({ email: "", username: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
@@ -56,9 +57,9 @@ function EditProfile(props) {
         })
       });
       const res = await response.json();
-      //appContext.setUser(res.data.user);
-      console.log(`data from fetchUpdateUser ${JSON.stringify(response)}`);
-
+      //appContext.setUser(res);
+        console.log(`data from fetchUpdateUser ${JSON.stringify(res)}`);
+        
     } catch (error) {
       console.error(error);
       //message.error("Error While Getting Logged In User Details");
@@ -111,6 +112,7 @@ function EditProfile(props) {
                                         .then((res) => {
                                             // set authed user in global context object
                                             appContext.setUser(res);
+                                            alert(`You have updated your profile. You need to re-login with your new information.`)
                                             setLoading(false);
                                             console.log(`updated user profile: ${JSON.stringify(res)}`)
                                         })
@@ -119,7 +121,8 @@ function EditProfile(props) {
                                             //setError(error.response.data);
                                             setLoading(false);
                                         });
-                                    //router.push("/login");
+                                    logout();
+                                    
                                     setData({ email: "", username: "", password: "" })
                                     
                                     
