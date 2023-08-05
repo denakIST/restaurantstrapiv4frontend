@@ -35,17 +35,17 @@ function Profile(props) {
                     <ListGroup flush>
                         <ListGroupItem>
                                 <Label>Username</Label>
-                                <Input readOnly placeholder={user.username}>{user.username}</Input>
+                                <Input readOnly value={user.username}/>
                         </ListGroupItem>
                         
                         <ListGroupItem>
                                 <Label>Email</Label>
-                                <Input readOnly placeholder={user.email}>{user.email}</Input>
+                                <Input readOnly value={user.email}/>
                         </ListGroupItem>
 
                         <ListGroupItem>
                                 <Label>Password</Label>
-                                <Input readOnly placeholder={user.password}>{user.password}</Input>
+                                <Input readOnly value={user.password}/>
                         </ListGroupItem>
                         
                     </ListGroup>
